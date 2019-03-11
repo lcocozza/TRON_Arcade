@@ -30,6 +30,8 @@ ALL_SRC= $(SRC) $(AUDIO) $(NETWORK) $(SCREEN)
 
 LIB= -lfmod -lncurses -lpanel
 
+PACKAGE= libncurses5-dev libncursesw5-dev
+
 FLAGS= -Wall -Wextra -Werror
 
 $(NAME): all
@@ -43,3 +45,11 @@ clean:
 fclean: clean
 
 re: fclean all
+
+install: all
+	sudo apt-get install $(PACKAGE)
+	sudo mv fmod/inc/*.h /usr/local/include/
+	sudo mv fmod/lib/*.so /usr/local/lib/
+	sudo mv fmod/lib/*.so.* /usr/local/lib/
+	sudo ldconfig -v
+	rm -rf fmod
