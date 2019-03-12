@@ -47,9 +47,4 @@ fclean: clean
 re: fclean all
 
 install: all
-	sudo apt-get install $(PACKAGE)
-	sudo mv fmod/inc/*.h /usr/local/include/
-	sudo mv fmod/lib/*.so /usr/local/lib/
-	sudo mv fmod/lib/*.so.* /usr/local/lib/
-	sudo ldconfig -v
-	rm -rf fmod
+	sh .install.sh
