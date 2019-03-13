@@ -28,7 +28,7 @@ SCREEN= $(addprefix $(SCREEN_PATH), $(SCREEN_FILE))
 
 ALL_SRC= $(SRC) $(AUDIO) $(NETWORK) $(SCREEN)
 
-LIB= -lfmod -lncurses -lpanel
+LIB= -lfmod -lncurses -lpanel -lpthread
 
 PACKAGE= libncurses5-dev libncursesw5-dev
 

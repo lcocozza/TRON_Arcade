@@ -18,6 +18,7 @@ void	end_screen(char *str, short int exit_type);
 /*ft_splash_screen.c*/
 void	splash_title(void);
 void	splash_subtitle(void);
+void	splash_menu(void);
 void	splash_screen(void);
 
 /************************/

@@ -19,4 +19,9 @@
 */
 #include <fmod.h>
 
+/*
+*	lib pthread (thread)
+*/
+#include <pthread.h>
+
 #endif

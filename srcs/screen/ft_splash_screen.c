@@ -47,17 +47,38 @@ void	splash_subtitle(void)
 	}
 }
 
+void	splash_menu(void) 
+{
+	char start[] = "Press Enter";
+	char clean[] = "           ";
+	int b = 0;
+	int c;
+	
+	timeout(0);
+	while ((c = getch()) != 10)
+	{
+		attron(A_BOLD);
+		mvprintw((LINES / 2) + 5, (COLS / 2) - (strlen(start) / 2), "%s", ((b) ? start : clean));
+		attroff(A_BOLD);
+		refresh();
+		msleep(((b) ? 1000 : 500));
+		b = ((b) ? 0 : 1);
+	}
+}
+
 void	splash_screen(void)
-{	
+{
 	int i = 0;
 	int g = 0;
 	int b = 0;
 
 	curs_set(0);
-	init_color(COLOR_BLACK, 23, 23, 23);
-	init_pair(0, COLOR_BLACK, COLOR_BLACK);
+	noecho();
+	init_color(COLOR_BLACK, 0, 0, 0);
+	init_pair(0, COLOR_WHITE, COLOR_BLACK);
 	init_pair(2, COLOR_CYAN, COLOR_BLACK);
 	init_pair(3, COLOR_WHITE, COLOR_WHITE);
+	init_pair(4, COLOR_WHITE, COLOR_BLACK);
 	bkgd(COLOR_PAIR(0));
 
 	while (i++ < 100)
@@ -69,6 +90,6 @@ void	splash_screen(void)
 		b += 10;
 		msleep(75);
 	}
-	splash_subtitle();
-	getch();
+	splash_subtitle(); 
+	splash_menu();
 }
