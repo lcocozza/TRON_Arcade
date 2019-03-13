@@ -14,3 +14,12 @@ void	end_prog(char *str, short int exit_type)
 	if (exit_type != NO_EXIT)
 		exit(exit_type);
 }
+
+void	launch_splash(FMOD_SYSTEM *system)
+{
+	FMOD_SOUND *splash_theme;
+
+	splash_theme = play_splash_theme(system);
+	splash_screen();
+	FMOD_Sound_Release(splash_theme);
+}

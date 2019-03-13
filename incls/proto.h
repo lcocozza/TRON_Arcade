@@ -7,6 +7,7 @@
 /*ft_general.c*/
 void	end_all(FMOD_SYSTEM *system, char *str, short int exit_type);
 void	end_prog(char *str, short int exit_type);
+void	launch_splash(FMOD_SYSTEM *system);
 
 /************************/
 /*	srcs/screen/	*/
@@ -16,6 +17,7 @@ void	init_screen(void);
 void	end_screen(char *str, short int exit_type);
 /*ft_splash_screen.c*/
 void	splash_title(void);
+void	splash_subtitle(void);
 void	splash_screen(void);
 
 /************************/

@@ -2,7 +2,6 @@
 
 void	splash_title(void)
 {
-	char subtitle[] = "A  R  C  A  D  E";
 	FILE *title = NULL;
 	int x, y;
 	int c;
@@ -25,11 +24,27 @@ void	splash_title(void)
 			x = (COLS / 2) - 40;
 		}
 	}
-	attron(COLOR_PAIR(2));
-	mvprintw(y + 2, (COLS / 2) - (strlen(subtitle) / 2), "%s", subtitle);
-	attroff(COLOR_PAIR(2));
-
 	fclose(title);
+	refresh();
+}
+
+void	splash_subtitle(void)
+{
+	char subtitle[] = "          A  R  C  A  D  E          ";
+	int i = 0;
+	int j = 0;
+
+	while (j < (int)strlen(subtitle) * 2)
+	{
+		mvaddch((LINES / 2) - 3, (COLS / 2) - (strlen(subtitle) / 2) + i, subtitle[i] | COLOR_PAIR((j < (int)strlen(subtitle)) ? 3 : 2) | A_BOLD);
+		refresh();
+		msleep(3);
+		if (i == (int)strlen(subtitle) - 1)
+			i = 0;
+		else
+			i++;
+		j++;
+	}
 }
 
 void	splash_screen(void)
@@ -37,21 +52,23 @@ void	splash_screen(void)
 	int i = 0;
 	int g = 0;
 	int b = 0;
-	
+
+	curs_set(0);
 	init_color(COLOR_BLACK, 23, 23, 23);
 	init_pair(0, COLOR_BLACK, COLOR_BLACK);
+	init_pair(2, COLOR_CYAN, COLOR_BLACK);
+	init_pair(3, COLOR_WHITE, COLOR_WHITE);
 	bkgd(COLOR_PAIR(0));
 
 	while (i++ < 100)
 	{
 		init_color(COLOR_CYAN, 0 , g, b);
 		init_pair(1, COLOR_CYAN, COLOR_CYAN);
-		init_pair(2, COLOR_CYAN, COLOR_BLACK);
 		splash_title();
-		refresh();
 		g += 10;
 		b += 10;
-		msleep(100);
+		msleep(75);
 	}
+	splash_subtitle();
 	getch();
 }
