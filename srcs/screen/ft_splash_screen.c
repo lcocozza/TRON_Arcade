@@ -47,26 +47,48 @@ void	splash_subtitle(void)
 	}
 }
 
-void	splash_menu(void) 
+int	splash_menu(FMOD_SYSTEM *system) 
 {
-	char start[] = "Press Enter";
-	char clean[] = "           ";
+	FMOD_SOUND *move;
+	char solo[] = "Solo";
+	char multi[] = "Multiplayer";
+	char quit[] = "Press 'q' to quit.";
 	int b = 0;
-	int c;
+	int c = 0;
 	
-	timeout(0);
-	while ((c = getch()) != 10)
+	while (c != 'q' && c != 10)
 	{
 		attron(A_BOLD);
-		mvprintw((LINES / 2) + 5, (COLS / 2) - (strlen(start) / 2), "%s", ((b) ? start : clean));
+		if (!(b))
+			attron(A_REVERSE);
+		mvprintw((LINES / 2) + 3, (COLS / 2) - (strlen(solo) / 2), "%s", solo);
+		if (!(b))
+			attroff(A_REVERSE);
+		else
+			attron(A_REVERSE);
+		mvprintw((LINES / 2) + 5, (COLS / 2) - (strlen(multi) / 2), "%s", multi);
+		if (b)
+			attroff(A_REVERSE);
+		mvprintw(LINES - 1, (COLS - 1) - strlen(quit), "%s", quit);
 		attroff(A_BOLD);
 		refresh();
-		msleep(((b) ? 1000 : 500));
-		b = ((b) ? 0 : 1);
+		c = getch();
+		if (c == KEY_UP && b)
+		{
+			b = 0;
+			move = play_menu_move(system);
+		}
+		else if (c == KEY_DOWN && !(b))
+		{
+			b = 1;
+			move = play_menu_move(system);
+		}
 	}
+	FMOD_Sound_Release(move);
+	return ((c == 'q') ? -1 : b);
 }
 
-void	splash_screen(void)
+void	splash_screen(FMOD_SYSTEM *system)
 {
 	int i = 0;
 	int g = 0;
@@ -74,6 +96,7 @@ void	splash_screen(void)
 
 	curs_set(0);
 	noecho();
+	keypad(stdscr, TRUE);
 	init_color(COLOR_BLACK, 0, 0, 0);
 	init_pair(0, COLOR_WHITE, COLOR_BLACK);
 	init_pair(2, COLOR_CYAN, COLOR_BLACK);
@@ -91,5 +114,5 @@ void	splash_screen(void)
 		msleep(75);
 	}
 	splash_subtitle(); 
-	splash_menu();
+	splash_menu(system);
 }

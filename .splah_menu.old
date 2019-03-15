@@ -1,0 +1,18 @@
+void	splash_menu(void) 
+{
+	char start[] = "Press Enter";
+	char clean[] = "           ";
+	int b = 0;
+	int c;
+	
+	timeout(0);
+	while ((c = getch()) != 10)
+	{
+		attron(A_BOLD);
+		mvprintw((LINES / 2) + 5, (COLS / 2) - (strlen(start) / 2), "%s", ((b) ? start : clean));
+		attroff(A_BOLD);
+		refresh();
+		msleep(((b) ? 1000 : 500));
+		b = ((b) ? 0 : 1);
+	}
+}

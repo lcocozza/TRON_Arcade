@@ -18,8 +18,8 @@ void	end_screen(char *str, short int exit_type);
 /*ft_splash_screen.c*/
 void	splash_title(void);
 void	splash_subtitle(void);
-void	splash_menu(void);
-void	splash_screen(void);
+int	splash_menu(FMOD_SYSTEM *system);
+void	splash_screen(FMOD_SYSTEM *system);
 
 /************************/
 /*	srcs/audio/	*/
@@ -29,5 +29,7 @@ void	end_audio(FMOD_SYSTEM *system, char *str, short int exit_type);
 FMOD_SYSTEM	*init_audio(void);
 /*ft_splash_audio.c*/
 FMOD_SOUND	*play_splash_theme(FMOD_SYSTEM *system);
+FMOD_SOUND	*play_menu_select(FMOD_SYSTEM *system);
+FMOD_SOUND	*play_menu_move(FMOD_SYSTEM *system);
 
 #endif

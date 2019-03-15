@@ -20,6 +20,6 @@ void	launch_splash(FMOD_SYSTEM *system)
 	FMOD_SOUND *splash_theme;
 
 	splash_theme = play_splash_theme(system);
-	splash_screen();
+	splash_screen(system);
 	FMOD_Sound_Release(splash_theme);
 }
