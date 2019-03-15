@@ -88,11 +88,11 @@ int	splash_menu(FMOD_SYSTEM *system)
 	return ((c == 'q') ? -1 : b);
 }
 
-void	splash_screen(FMOD_SYSTEM *system)
+void	splash_screen(void)
 {
 	int i = 0;
-	int g = 0;
-	int b = 0;
+	int green = 0;
+	int blue = 0;
 
 	curs_set(0);
 	noecho();
@@ -106,13 +106,12 @@ void	splash_screen(FMOD_SYSTEM *system)
 
 	while (i++ < 100)
 	{
-		init_color(COLOR_CYAN, 0 , g, b);
+		init_color(COLOR_CYAN, 0 , green, blue);
 		init_pair(1, COLOR_CYAN, COLOR_CYAN);
 		splash_title();
-		g += 10;
-		b += 10;
+		green += 10;
+		blue += 10;
 		msleep(75);
 	}
-	splash_subtitle(); 
-	splash_menu(system);
+	splash_subtitle();
 }

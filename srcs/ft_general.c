@@ -15,11 +15,14 @@ void	end_prog(char *str, short int exit_type)
 		exit(exit_type);
 }
 
-void	launch_splash(FMOD_SYSTEM *system)
+int	launch_splash(FMOD_SYSTEM *system)
 {
 	FMOD_SOUND *splash_theme;
+	int menu = 0;
 
 	splash_theme = play_splash_theme(system);
-	splash_screen(system);
+	splash_screen();
+	menu = splash_menu(system);
 	FMOD_Sound_Release(splash_theme);
+	return menu;
 }
