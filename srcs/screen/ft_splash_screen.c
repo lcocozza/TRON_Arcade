@@ -56,7 +56,7 @@ int	splash_menu(FMOD_SYSTEM *system)
 	int b = 0;
 	int c = 0;
 	
-	while (c != 'q' && c != 10)
+	while (c != 'q' && c != 10 && c != ' ')
 	{
 		attron(A_BOLD);
 		if (!(b))
@@ -81,6 +81,11 @@ int	splash_menu(FMOD_SYSTEM *system)
 		else if (c == KEY_DOWN && !(b))
 		{
 			b = 1;
+			move = play_menu_move(system);
+		}
+		else if (c == 9)
+		{
+			b = ((b) ? 0 : 1);
 			move = play_menu_move(system);
 		}
 	}

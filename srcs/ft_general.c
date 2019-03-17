@@ -26,3 +26,13 @@ int	launch_splash(FMOD_SYSTEM *system)
 	FMOD_Sound_Release(splash_theme);
 	return menu;
 }
+
+void	launch_solo(void)
+{
+
+};
+
+void	launch_multi(void)
+{
+
+};
