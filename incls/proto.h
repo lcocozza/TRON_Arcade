@@ -5,11 +5,14 @@
 /*	srcs/	*/
 /****************/
 /*ft_general.c*/
-void	end_all(FMOD_SYSTEM *system, char *str, short int exit_type);
+void	end_all(SOCKET socket, FMOD_SYSTEM *system, char *str, short int exit_type);
 void	end_prog(char *str, short int exit_type);
 int	launch_splash(FMOD_SYSTEM *system);
 void	launch_solo(void);
 void	launch_multi(void);
+/*libft.c*/
+int	get_next_line(FILE *fd, char **line);
+char	*ft_itoa(int n);
 
 /************************/
 /*	srcs/screen/	*/
@@ -34,5 +37,18 @@ FMOD_SYSTEM	*init_audio(void);
 FMOD_SOUND	*play_splash_theme(FMOD_SYSTEM *system);
 FMOD_SOUND	*play_menu_select(FMOD_SYSTEM *system);
 FMOD_SOUND	*play_menu_move(FMOD_SYSTEM *system);
+
+/************************/
+/*	srcs/network/	*/
+/************************/
+/*ft_general_network.c*/
+void	end_network(SOCKET socket, char *str, short int exit_type);
+int	host_connect(const char *hostname, short unsigned int port);
+int	sendfile_net(const char *path, const char *filename, SOCKET socket);
+int	recvfile_net(const char *path, SOCKET socket);
+int	send_net(SOCKET socket, const char *buffer);
+char	*recv_net(SOCKET socket);
+/*ft_host_list.c*/
+void	get_host_list(SOCKET host_sock);
 
 #endif

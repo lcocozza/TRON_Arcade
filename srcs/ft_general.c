@@ -1,8 +1,11 @@
 #include "TRON_Arcade.h"
 
-void	end_all(FMOD_SYSTEM *system, char *str, short int exit_type)
+void	end_all(SOCKET socket, FMOD_SYSTEM *system, char *str, short int exit_type)
 {
-	end_audio(system, NULL, NO_EXIT);
+	if (socket != NO_SOCK)
+		end_network(socket, NULL, NO_EXIT);
+	if (system != NULL)
+		end_audio(system, NULL, NO_EXIT);
 	end_screen(NULL, NO_EXIT);
 	end_prog(str, exit_type);
 }
@@ -30,9 +33,13 @@ int	launch_splash(FMOD_SYSTEM *system)
 void	launch_solo(void)
 {
 
-};
+}
 
 void	launch_multi(void)
 {
-
-};
+	SOCKET host_sock;
+	
+	if ((host_sock = host_connect(HL_IP, HL_PORT)) == -1)
+		return;
+	get_host_list(host_sock);
+}

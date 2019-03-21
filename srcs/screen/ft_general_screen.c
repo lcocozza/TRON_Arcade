@@ -30,15 +30,18 @@ int	screen_size(void)
 		bkgd(COLOR_PAIR(5));
 		b = -1;
 
-		attron(A_BOLD);
-		mvprintw(LINES / 2, (COLS / 2) - (strlen(wrong) / 2), "%s", wrong);
-		mvprintw((LINES / 2) + 1, (COLS / 2) - (strlen(explain) / 2), "%s", explain);
-		mvprintw(LINES - 1, COLS - strlen(quit), "%s", quit);
-		attroff(A_BOLD);
-		mvaddstr(1, 1, "minimum required: 42 lines, 95 columns");
-		mvprintw(2, 1, "actual: %d lines, %d columns", LINES, COLS);
-		refresh();
-
+		do
+		{
+			erase();
+			attron(A_BOLD);
+			mvprintw(LINES / 2, (COLS / 2) - (strlen(wrong) / 2), "%s", wrong);
+			mvprintw((LINES / 2) + 1, (COLS / 2) - (strlen(explain) / 2), "%s", explain);
+			mvprintw(LINES - 1, COLS - strlen(quit), "%s", quit);
+			attroff(A_BOLD);
+			mvaddstr(1, 1, "minimum required: 42 lines, 191 columns");
+			mvprintw(2, 1, "actual: %d lines, %d columns", LINES, COLS);
+			refresh();
+		}
 		while (getch() != 'q') ;
 		erase();
 	}

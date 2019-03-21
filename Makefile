@@ -3,12 +3,14 @@
 NAME= TRON_Arcade
 
 SRC_FILE=	main.c \
-		ft_general.c
+		ft_general.c\
+		libft.c
 
 AUDIO_FILE= 	ft_general_audio.c \
 		ft_splash_audio.c
 
-NETWORK_FILE=
+NETWORK_FILE=	ft_general_network.c\
+		ft_host_list.c
 
 SCREEN_FILE=	ft_general_screen.c \
 		ft_splash_screen.c
@@ -37,7 +39,7 @@ FLAGS= -Wall -Wextra -Werror
 $(NAME): all
 
 all:
-	gcc -o $(NAME) $(FLAGS) $(ALL_SRC) $(INCL_PATH) $(LIB_PATH) $(LIB)
+	gcc -g -o $(NAME) $(FLAGS) $(ALL_SRC) $(INCL_PATH) $(LIB_PATH) $(LIB)
 
 clean:
 	rm $(NAME)
