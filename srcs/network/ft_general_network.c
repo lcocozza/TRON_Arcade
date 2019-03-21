@@ -34,15 +34,15 @@ int	sendfile_net(const char *path, const char *filename, SOCKET socket)
 
 	if (path != NULL)
 	{
-		file = malloc(sizeof(path) + sizeof(filename) + 1);
-		bzero(file, strlen(path) + strlen(filename) + 1);
+		if ((file = calloc(strlen(path) + strlen(filename) + 1, sizeof(char))) == NULL)
+			return -1;
 		strcpy(file, path);
 		strcat(file, filename);
 	}
 	else
 	{
-		file = malloc(sizeof(filename) + 1);
-		bzero(file, strlen(filename) + 1);
+		if ((file = calloc(strlen(filename) + 1, sizeof(char))) == NULL)
+			return -1;
 		strcpy(file, filename);
 	}
 
@@ -74,15 +74,15 @@ int	recvfile_net(const char *path, SOCKET socket)
 
 	if (path != NULL)
 	{
-		file = malloc(sizeof(char) * (strlen(path) + strlen(filename) + 1));
-		bzero(file, strlen(path) + strlen(filename) + 1);
+		if ((file = calloc(strlen(path) + strlen(filename) + 1, sizeof(char))) == NULL)
+			return - 1;
 		strcpy(file, path);
 		strcat(file, filename);
 	}
 	else
 	{
-		file = malloc(sizeof(char) * (strlen(filename) + 1));
-		bzero(file, strlen(filename) + 1);
+		if ((file = calloc((strlen(filename) + 1), sizeof(char))) == NULL)
+			return -1;
 		strcpy(file, filename);
 	}
 
@@ -108,7 +108,8 @@ int	recvfile_net(const char *path, SOCKET socket)
 
 int	send_net(SOCKET socket, const char *buffer)
 {
-	if (send(socket, ft_itoa(strlen(buffer) + 1), strlen(buffer) + 1, 0) == -1)
+	printf("buffer = %s\n", buffer);
+	if (send(socket, ft_itoa(strlen(buffer) + 1), strlen(ft_itoa(strlen(buffer))) + 1, 0) == -1)
 	{
 		perror("send size");
 		return -1;
