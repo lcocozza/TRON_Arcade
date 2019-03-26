@@ -44,7 +44,6 @@ FMOD_SOUND	*play_menu_move(FMOD_SYSTEM *system);
 /*ft_general_network.c*/
 void	end_network(SOCKET socket, char *str, short int exit_type);
 int	host_connect(const char *hostname, short unsigned int port);
-int	sendfile_net(const char *path, const char *filename, SOCKET socket);
 int	recvfile_net(const char *path, SOCKET socket);
 int	send_net(SOCKET socket, const char *buffer);
 char	*recv_net(SOCKET socket);

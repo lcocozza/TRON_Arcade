@@ -26,43 +26,6 @@ int	host_connect(const char *hostname, short unsigned int port)
 	return host_sock;
 }
 
-int	sendfile_net(const char *path, const char *filename, SOCKET socket)
-{
-	char *file = NULL;
-	char *buffer = NULL;
-	FILE *fd_file = NULL;
-
-	if (path != NULL)
-	{
-		if ((file = calloc(strlen(path) + strlen(filename) + 1, sizeof(char))) == NULL)
-			return -1;
-		strcpy(file, path);
-		strcat(file, filename);
-	}
-	else
-	{
-		if ((file = calloc(strlen(filename) + 1, sizeof(char))) == NULL)
-			return -1;
-		strcpy(file, filename);
-	}
-
-	if ((fd_file = fopen(file, "r")) == NULL)
-	{
-		free(file);
-		return -1;
-	}
-
-	send_net(socket, filename);
-
-	while (get_next_line(fd_file, &buffer) > 0)
-		send_net(socket, buffer);
-	send_net(socket, "EOF");
-
-	free(file);
-	fclose(fd_file);
-	return 0;
-}
-
 int	recvfile_net(const char *path, SOCKET socket)
 {
 	char *file = NULL;
@@ -88,16 +51,22 @@ int	recvfile_net(const char *path, SOCKET socket)
 
 	if ((fd_file = fopen(file, "w+")) == NULL)
 	{
+		perror("fopen");
 		free(file);
 		return -1;
 	}
+	buffer = malloc(sizeof(char) * 1);
 
-	while (strcmp(buffer, "EOF") != 0)
+	do
 	{
 		buffer = recv_net(socket);
 		if (strcmp(buffer, "EOF") != 0)
+		{
 			fputs(buffer, fd_file);
+			fputs("\n", fd_file);
+		}
 	}
+	while (strcmp(buffer, "EOF") != 0);
 
 	free(file);
 	free(filename);
@@ -108,19 +77,18 @@ int	recvfile_net(const char *path, SOCKET socket)
 
 int	send_net(SOCKET socket, const char *buffer)
 {
-	printf("buffer = %s\n", buffer);
-	if (send(socket, ft_itoa(strlen(buffer) + 1), strlen(ft_itoa(strlen(buffer))) + 1, 0) == -1)
+	int bytes;
+
+	if ((bytes = send(socket, ft_itoa(strlen(buffer) + 1), strlen(ft_itoa(strlen(buffer))) + 1, 0)) == -1)
 	{
 		perror("send size");
 		return -1;
 	}
-	printf("have send size\n");
-	if (send(socket, buffer, strlen(buffer) + 1, 0) == -1)
+	if ((bytes = send(socket, buffer, strlen(buffer) + 1, 0)) == -1)
 	{
 		perror("send buffer");
 		return -1;
 	}
-	printf("have send buffer\n");
 	return 0;
 }
 
@@ -129,29 +97,39 @@ char	*recv_net(SOCKET socket)
 	unsigned int size;
 	char *buffer = NULL;
 	int bytes = 0;
+	char c;
+	int i = 0;
 
 	buffer = calloc(6, sizeof(char));
-
-	if ((bytes = recv(socket, buffer, sizeof(buffer), 0)) == -1)
+	do 
 	{
-		perror("recv size");
-		return NULL;
+		bytes = recv(socket, &c, 1, MSG_WAITALL);
+		if (bytes == -1)
+		{
+			perror("recv size");
+			return NULL;
+		}
+		buffer[i++] = c;
 	}
-	else
-		printf("recv size: %d bytes\n", bytes);
-	printf("recv size = |%s|\n", buffer);
+	while (c != 0);
 
 	size = atoi(buffer);
 	buffer = realloc(buffer, sizeof(char) * size);
 	bzero(buffer, size);
 
-	if ((bytes = recv(socket, buffer, sizeof(buffer), 0)) == -1)
+	i = 0;
+	do
 	{
-		perror("recv buffer");
-		return NULL;
+		bytes = recv(socket, &c, 1, MSG_WAITALL);
+		if (bytes == -1)
+		{
+			perror("recv buffer");
+			return NULL;
+		}
+		buffer[i++] = c;
 	}
-	else
-		printf("recv buffer: %d bytes\n", bytes);
-	printf("recv buffer = |%s|\n", buffer);
+	while (c != 0);
+	printf("buffer recv = %s\n", buffer);
+
 	return buffer;
 }
