@@ -37,9 +37,14 @@ void	launch_solo(void)
 
 void	launch_multi(void)
 {
-	SOCKET host_sock;
-	
-	if ((host_sock = host_connect(HL_IP, HL_PORT)) == -1)
-		return;
-	get_host_list(host_sock);
+	t_hlp *hlp = NULL;
+	t_win screen[3];
+
+	hlp = malloc(sizeof(t_hlp) * count_nb_host());
+
+	init_server_screen(screen);
+	get_host_list(screen);
+	get_host_info(hlp);
+	display_hlp(hlp, screen);
+	getch();
 }

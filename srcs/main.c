@@ -2,7 +2,7 @@
 
 int	main(void)
 {
-/*	FMOD_SYSTEM *system;
+	FMOD_SYSTEM *system;
 	int menu = 0;
 
 	system = init_audio();
@@ -15,7 +15,6 @@ int	main(void)
 	else if (menu == 1)
 		launch_multi();
 	end_all(NO_SOCK, system, NULL, EXIT_SUCCESS);
-*/
-	launch_multi();
+
 	return 0;
 }

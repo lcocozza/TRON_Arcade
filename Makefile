@@ -13,7 +13,8 @@ NETWORK_FILE=	ft_general_network.c\
 		ft_host_list.c
 
 SCREEN_FILE=	ft_general_screen.c \
-		ft_splash_screen.c
+		ft_splash_screen.c \
+		ft_server_screen.c
 
 SRC_PATH= srcs/
 AUDIO_PATH= $(SRC_PATH)audio/

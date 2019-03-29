@@ -51,7 +51,6 @@ int	recvfile_net(const char *path, SOCKET socket)
 
 	if ((fd_file = fopen(file, "w+")) == NULL)
 	{
-		perror("fopen");
 		free(file);
 		return -1;
 	}
@@ -80,15 +79,9 @@ int	send_net(SOCKET socket, const char *buffer)
 	int bytes;
 
 	if ((bytes = send(socket, ft_itoa(strlen(buffer) + 1), strlen(ft_itoa(strlen(buffer))) + 1, 0)) == -1)
-	{
-		perror("send size");
 		return -1;
-	}
 	if ((bytes = send(socket, buffer, strlen(buffer) + 1, 0)) == -1)
-	{
-		perror("send buffer");
 		return -1;
-	}
 	return 0;
 }
 
@@ -101,14 +94,11 @@ char	*recv_net(SOCKET socket)
 	int i = 0;
 
 	buffer = calloc(6, sizeof(char));
-	do 
+	do
 	{
 		bytes = recv(socket, &c, 1, MSG_WAITALL);
 		if (bytes == -1)
-		{
-			perror("recv size");
 			return NULL;
-		}
 		buffer[i++] = c;
 	}
 	while (c != 0);
@@ -122,14 +112,10 @@ char	*recv_net(SOCKET socket)
 	{
 		bytes = recv(socket, &c, 1, MSG_WAITALL);
 		if (bytes == -1)
-		{
-			perror("recv buffer");
 			return NULL;
-		}
 		buffer[i++] = c;
 	}
 	while (c != 0);
-	printf("buffer recv = %s\n", buffer);
 
 	return buffer;
 }

@@ -47,7 +47,7 @@ void	splash_subtitle(void)
 	}
 }
 
-int	splash_menu(FMOD_SYSTEM *system) 
+int	splash_menu(FMOD_SYSTEM *system)
 {
 	FMOD_SOUND *move;
 	char solo[] = "Solo";
@@ -55,7 +55,7 @@ int	splash_menu(FMOD_SYSTEM *system)
 	char quit[] = "Press 'q' to quit.";
 	int b = 0;
 	int c = 0;
-	
+
 	while (c != 'q' && c != 10 && c != ' ')
 	{
 		attron(A_BOLD);
@@ -89,15 +89,17 @@ int	splash_menu(FMOD_SYSTEM *system)
 			move = play_menu_move(system);
 		}
 	}
+	erase();
+	refresh();
 	FMOD_Sound_Release(move);
 	return ((c == 'q') ? -1 : b);
 }
 
 void	splash_screen(void)
 {
-	int i = 0;
-	int green = 0;
-	int blue = 0;
+//	int i = 0;
+//	int green = 0;
+//	int blue = 0;
 
 	curs_set(0);
 	noecho();
@@ -106,10 +108,10 @@ void	splash_screen(void)
 	init_pair(0, COLOR_WHITE, COLOR_BLACK);
 	init_pair(2, COLOR_CYAN, COLOR_BLACK);
 	init_pair(3, COLOR_WHITE, COLOR_WHITE);
-	init_pair(4, COLOR_WHITE, COLOR_BLACK);
+	init_pair(4, COLOR_BLACK, COLOR_WHITE);
 	bkgd(COLOR_PAIR(0));
 
-	while (i++ < 100)
+/*	while (i++ < 100)
 	{
 		init_color(COLOR_CYAN, 0 , green, blue);
 		init_pair(1, COLOR_CYAN, COLOR_CYAN);
@@ -117,6 +119,6 @@ void	splash_screen(void)
 		green += 10;
 		blue += 10;
 		msleep(75);
-	}
+	}*/
 	splash_subtitle();
 }

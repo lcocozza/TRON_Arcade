@@ -49,3 +49,14 @@ int	screen_size(void)
 		resizeterm(42, 191);
 	return b;
 }
+
+void hl_log(t_win *screen, char *str)
+{
+	werase(screen[0].content_w);
+
+	wattron(screen[0].content_w, A_DIM | A_ITALIC);
+	mvwaddstr(screen[0].content_w, 0, 1, str);
+	wattroff(screen[0].content_w, A_DIM | A_ITALIC);
+
+	wrefresh(screen[0].content_w);
+}

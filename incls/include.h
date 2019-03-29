@@ -19,6 +19,11 @@
 #include <netdb.h>
 
 /*
+* libc (unicode)
+*/
+//#include <locale.h>
+
+/*
 *	lib ncurses (screen)
 */
 #include <ncurses.h>
